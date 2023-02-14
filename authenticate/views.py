@@ -38,6 +38,12 @@ def index(request):
                     'result': 'trial not expired',
                 })
     else:
+        machine = Machine.objects.filter(machine_code=machine_code)
+        if machine:
+            if machine[0].activated:
+                return Response({
+                    'result': 'success',
+                })
         credentials = Credential.objects.filter(code=activation_code)
         if not credentials:
             return Response({
